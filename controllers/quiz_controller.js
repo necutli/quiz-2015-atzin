@@ -1,4 +1,4 @@
-var models = require('../models/model.js');
+var models = require('../models/models.js');
 
  //GET /quizes/question
  exports.question = function(req, res) {
