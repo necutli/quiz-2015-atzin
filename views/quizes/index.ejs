@@ -1,3 +1,8 @@
+<form method="get" action="/quizes" >
+	<p>Buscar preguntas: <input type="text" name="search" autofocus><input type="submit" value="Buscar"></p>
+	<br>
+</form>
+<hr>
 <table>
 <% var i ; for(i=0; i< quizes.length ; i++) {%>
 	<tr><td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td></tr>

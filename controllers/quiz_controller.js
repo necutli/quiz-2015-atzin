@@ -13,7 +13,9 @@ exports.load = function (req, res, next, quizId){
 };
 
 exports.index = function(req, res) {
-	models.Quiz.findAll().then( function (quizes){
+	var buscar = (  req.query.search || "" ).replace(/\s/,'%').replace(/(.*)/, "%$1%");
+	//console.log("Buscar: " + buscar);
+	models.Quiz.findAll({where:['pregunta like ?' ,  buscar ] , order: [['pregunta' , 'ASC']] }).then( function (quizes){
 		res.render('quizes/index',{quizes : quizes});
 	}).catch(function(error){next(error);  });
 };
