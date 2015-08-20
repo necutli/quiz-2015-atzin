@@ -38,14 +38,14 @@ exports.answer = function (req, res) {
 		}
 		res.render('quizes/answer', {quiz: req.quiz,  respuesta:resultado, errors:[]});	
 	//});
-}
+};
 
 exports.new = function(req, res){
 	var quiz = models.Quiz.build(
 		{pregunta:"Pregunta", respuesta: "Respuesta",tema: "otro"}
 	);
 	res.render('quizes/new',{quiz:quiz, errors:[]});
-}
+};
 
 exports.create = function(req, res){
 	var quiz = models.Quiz.build( req.body.quiz	);
@@ -64,13 +64,13 @@ exports.create = function(req, res){
 		}
 	});
 	
-}
+};
 
 
 exports.edit = function(req, res){
 	var quiz = req.quiz; //autoload de instancia de quiz
 	res.render('quizes/edit',{quiz:quiz, errors:[]});
-}
+};
 
 
 exports.update = function(req, res) {
@@ -91,11 +91,11 @@ exports.update = function(req, res) {
 		
 		
 	});
-}
+};
 
 exports.destroy = function(req, res) {
 	
 	req.quiz.destroy().then(function () {
 				 res.redirect('/quizes'); 
 	}).catch(function(error){next(error)});
-}
+};

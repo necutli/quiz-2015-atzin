@@ -39,8 +39,10 @@ Quiz.hasMany(Comment);
 exports.Quiz = Quiz; // exportar definicion de tabla Quiz
 exports.Comment = Comment; // exportar definicion de tabla Comment
 //sequelize.sinc() crea e inicializa tabla de preguntas en DB
+//console.info('Inicializar Base de datos');
 sequelize.sync().then(function() {
 	//success(.. ) ejecuta el manejador una vez creada la tabla
+	
 	Quiz.count().then(function (count){
 		if(count === 0) { // la tabla se inicializa solo si esta vacía
 		Quiz.create({ pregunta: 'Capital de Italia',
@@ -48,8 +50,8 @@ sequelize.sync().then(function() {
 						});
 		Quiz.create({ pregunta: 'Capital de Portugal',
 						respuesta: 'Lisboa'
-						})
-				.then(function(){console.log('Base de datos inicializada')});
-		};
+						});
+				//.then(function(){console.log('Base de datos inicializada');});
+		}
 	});
 });

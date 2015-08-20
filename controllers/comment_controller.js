@@ -3,7 +3,7 @@ var models = require('../models/models.js');
 // GET /quizes/:quizId/comments/new
 exports.new = function(req, res) {
 	res.render('comments/new.ejs', { quizId: req.params.quizId, errors: [] } );
-}
+};
 
 // POST /quizes/:quizId/comments
 exports.create = function(req, res) {
@@ -26,4 +26,4 @@ exports.create = function(req, res) {
 			}
 		}
 		).catch(function(error){next(error);})
-}
+};

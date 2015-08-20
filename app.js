@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
-
+var session = require('express-session');
 
 var routes = require('./routes/index');
 var methodOverride = require('method-override');
@@ -22,9 +22,23 @@ app.use(partials());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({   extended: true }));
-app.use(cookieParser());
+app.use(cookieParser('AtzinKMXj'));
+app.use(session({resave:true, saveUninitialized:false, secret:'AtzinKMXj'}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use( function(req,res,next){
+	// guardar path en session.redir para despues de login
+	if( ! req.path.match(/\/login|\/logout/)){
+		req.session.redir = req.path;
+	}
+	
+	//Hacer visible req.session en las vistar
+	res.locals.session = req.session;
+	console.log(req.session);
+	next();
+});
+
 app.use('/', routes);
 
 
