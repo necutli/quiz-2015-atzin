@@ -27,6 +27,31 @@ app.use(session({resave:true, saveUninitialized:false, secret:'AtzinKMXj'}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//logout
+app.use(function (req,res,next){
+	if(req.session.user){
+		if(req.session.user.ultimoAcceso == null)
+		{
+			req.session.user.ultimoAcceso = new Date();
+		}
+		var ultimoAcceso = Date.parse( req.session.user.ultimoAcceso);
+		var ahora = new Date();
+		var diferencia = (ahora - ultimoAcceso)/(1000*60);
+		req.session.user.ultimoAcceso = ahora;
+		console.log("ultimo acceso"+ ultimoAcceso);
+		console.log("ahora" + ahora);
+		console.log("diferencia:" + diferencia);
+		if(diferencia > 1)
+		{
+			delete req.session.user;
+			res.redirect(req.session.redir.toString()); // redirect a path anterior a login
+		}
+		
+	}
+	next();
+});
+
+//session
 app.use( function(req,res,next){
 	// guardar path en session.redir para despues de login
 	if( ! req.path.match(/\/login|\/logout/)){
@@ -38,6 +63,9 @@ app.use( function(req,res,next){
 	console.log(req.session);
 	next();
 });
+
+
+
 
 app.use('/', routes);
 
